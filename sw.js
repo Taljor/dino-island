@@ -1,0 +1,15 @@
+// Dino Island service worker: precache the app shell so the game runs with no internet.
+// Bump CACHE whenever you change index.html so iPads pick up the new version.
+const CACHE = 'dino-island-v16';
+const ASSETS = [
+  './', './index.html', './three.min.js', './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png'
+];
+self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting())); });
+self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
+self.addEventListener('fetch', e => {
+  if (e.request.method !== 'GET') return;
+  e.respondWith(caches.match(e.request, { ignoreSearch: true }).then(hit => hit || fetch(e.request).then(res => {
+    if (res && res.ok) { const copy = res.clone(); caches.open(CACHE).then(c => c.put(e.request, copy)); }
+    return res;
+  }).catch(() => hit)));
+});
