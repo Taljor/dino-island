@@ -1614,7 +1614,11 @@ window.DinoIsland = { state, CONFIG, SPECIES, foods, critters, doAction, playerH
 </script>
 <script>
 if('serviceWorker' in navigator && (location.protocol==='https:' || location.hostname==='localhost')){
-  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js').catch(()=>{}); });
+  window.addEventListener('load', ()=>{
+    let hadController=!!navigator.serviceWorker.controller;
+    navigator.serviceWorker.addEventListener('controllerchange', ()=>{ if(hadController){ hadController=false; location.reload(); } else hadController=true; });   // a new version took over: reload once so it's what you play
+    navigator.serviceWorker.register('sw.js', { updateViaCache:'none' }).then(reg=>{ try{ reg.update(); }catch(e){} }).catch(()=>{});
+  });
 }
 </script>
 </body>
