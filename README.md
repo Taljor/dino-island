@@ -47,6 +47,9 @@ The island is ~2.3× bigger with the nest in the middle:
 - 🌋 **Ash Badlands** (north) — dead trees, obsidian, lava pools (you can't walk into them), Rumble Volcano and the Fossil Arch.
 A toast announces each biome as you enter it and the HUD shows its icon. Biome sectors, colors and plant lists are in the `BIOMES` table and the vegetation block; each landmark counts toward the Explorer trophy (7 in total).
 
+## Egg Hunt
+Six eggs are hidden around the island (never near the nest; a little sparkle gives them away up close, and the hint arrow points to the nearest one when you're not hungry or thirsty). Walk into an egg to pick it up — it rides on your back — and carry it home to the nest. It warms for 20 seconds and hatches into a baby of that species, which follows you in a parade (up to 6; extras play at the nest). A predator bump knocks the egg off your back, so Defend has a job. Trophies: **Egg Hunter** (first hatch) and **Full Nest** (six hatches) unlock the Speckled and Coral skins. Babies and the nest state are saved.
+
 ## Pixel art icons
 Every emoji has been replaced by an original 16×16 pixel icon (see `icons-sheet.png`). The whole set follows one system: a single tinted-dark ink outline (`#0a1f14`, never pure black), light from the top-left, a 24-color palette of hue-shifted three-step ramps (shadows lean cool, highlights lean warm), a 1px safe border, side-view dinosaurs facing right, and flat front-on objects. Icons are stored as text grids in `PX` at the top of the script — one character per pixel, `.` for transparent, letters for palette entries in `PX_PAL` — and rendered to crisp data-URL images at boot, so there are no image files to host and nothing to license. To add or edit an icon, edit its 16 rows of 16 characters.
 
