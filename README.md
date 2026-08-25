@@ -14,7 +14,7 @@ Progress saves automatically (every 8 s and whenever something important happens
 ## Controls
 - **Left stick** (bottom-left; floats to wherever the thumb lands): push up = walk forward, pull down = back up, push to the edge = run. Sideways does nothing.
 - **Right stick** (bottom-right): turns the dino left/right. The camera is locked behind the dino, so it turns with it.
-- **Tap the ground** (upper part of the screen) → the dino walks there. Tap water → walks to the nearest shore.
+- **Quick tap anywhere** (even where the sticks live) → Bite / Defend, same as the button. A press that lifts within about a quarter second without moving is a tap; anything held or dragged is a stick. If nothing is in reach and you're at the water's edge, the tap drinks instead.
 - **Drink** button appears bottom-center near water.
 - Keyboard: W/S forward/back, A/D or ←/→ turn, Shift = run, Space/E = drink.
 
@@ -28,11 +28,14 @@ Nine starting dinosaurs, chosen on the hatch screen (the nest shows a live 3D pr
 Each species has a favorite food that gives bonus growth, its own size and speed, and the `SPECIES` table at the top of `index.html` is plain data — add a species by giving it a body type, size, speed, diet, favorite and a list of features (frill, horns, plates, tailspikes, sail, armor, club, crest, feathers, longneck, longsnout, sickle, teeth).
 
 ## Hunting and defending (size matters, nobody dies)
-- The **action button** (bottom-center, next to Drink; keyboard F) is 🦷 **Bite** for carnivores/omnivores and 🛡️ **Defend** for herbivores.
+- The **action** — tap the screen, or the bottom-center button (keyboard F) — is 🦷 **Bite** for carnivores/omnivores and 🛡️ **Defend** for herbivores.
 - Bite a wild dinosaur no bigger than ~1.25× your size and it's eaten in a puff of stars: big hunger refill and +4 growth. It respawns in its home biome a minute later. Anything bigger just gets bonked.
 - Defend/bonk sends any nearby dinosaur (or turtle) flying with stars; it runs off for a few seconds. Carnivore NPCs (Rex, Raptor, Spino) chase and bump players smaller than themselves — a bump costs a little hunger and a short stumble, never health. Run (they're slower than a sprinting player) or bonk them back.
 - Wild dinos come in sizes; the big Rex lives in the badlands and the Spino in the swamp, so hatchlings learn to steer clear until they've grown.
 - Trophies: **Bonk!** (5 knockbacks) and **Top of the Food Chain** (5 hunts for meat-eaters, 10 knockbacks for herbivores) unlock the Tiger and Shadow skins.
+
+## HUD size
+The HUD scales itself to the device (full size on iPads, about 72% on phones) so nothing overlaps. ⚙️ → **HUD size** overrides it with a slider (60–130%); *Auto for this device* goes back to automatic.
 
 ## Camera
 The camera bobs with the stride and widens slightly when running. Turn it off under ⚙️ → Camera bounce if it bothers anyone. The ⚙️ menu also has a **Field of view** slider (60°–110° horizontal; 80° default) that previews live behind the menu.
@@ -46,6 +49,9 @@ The island is ~2.3× bigger with the nest in the middle:
 - ❄️ **Snowy Peaks** (north-west) — a high plateau, snow-capped pines, boulders, glowing ice and the Crystal Cave.
 - 🌋 **Ash Badlands** (north) — dead trees, obsidian, lava pools (you can't walk into them), Rumble Volcano and the Fossil Arch.
 A toast announces each biome as you enter it and the HUD shows its icon. Biome sectors, colors and plant lists are in the `BIOMES` table and the vegetation block; each landmark counts toward the Explorer trophy (7 in total).
+
+## The living island (v1.7)
+Sky: a gradient skydome with a sun glow, drifting clouds, sunset grading. Sea: rolling waves, darker deep water, foam along every coastline, sparkle. A **river** runs from the Snowy Peaks to the meadow lake through a groove in the land, over a **waterfall** and under a log bridge — you can wade in it and drink from it. Hot springs steam in the badlands; Rumble Volcano grumbles every couple of minutes (embers, a shake, a low rumble); a **rain shower** passes every few minutes and leaves a rainbow. Wildlife: butterflies, dragonflies, pterosaurs circling, fish under the water, crabs on the beach; trees and grass sway in the wind; snow falls in the peaks, embers rise in the badlands, pollen drifts in the jungle, bubbles rise in the swamp. Your dino blinks, leaves fading footprints in sand, snow and ash, splashes when wading, and shakes itself dry when it climbs out.
 
 ## Egg Hunt
 Six eggs are hidden around the island (never near the nest; a little sparkle gives them away up close, and the hint arrow points to the nearest one when you're not hungry or thirsty). Walk into an egg to pick it up — it rides on your back — and carry it home to the nest. It warms for 20 seconds and hatches into a baby of that species, which follows you in a parade (up to 6; extras play at the nest). A predator bump knocks the egg off your back, so Defend has a job. Trophies: **Egg Hunter** (first hatch) and **Full Nest** (six hatches) unlock the Speckled and Coral skins. Babies and the nest state are saved.

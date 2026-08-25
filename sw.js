@@ -1,6 +1,6 @@
 // Dino Island service worker: precache the app shell so the game runs with no internet.
 // Bump CACHE whenever you change index.html so iPads pick up the new version.
-const CACHE = 'dino-island-v17';
+const CACHE = 'dino-island-v21';
 const ASSETS = [
   './', './index.html', './three.min.js', './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png'
 ];
