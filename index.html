@@ -1161,7 +1161,7 @@ function burst(x,y,z,color,spread,size){ const b=bursts[burstIdx++%bursts.length
 
 const AudioSys = {
   ctx:null,
-  init(){ try{ const AC=window.AudioContext||window.webkitAudioContext; if(!AC) return; if(!this.ctx) this.ctx=new AC(); if(this.ctx.state==='suspended') this.ctx.resume(); }catch(e){} },
+  init(){ try{ const AC=window.AudioContext||window.webkitAudioContext; if(!AC) return; if(!this.ctx){ this.ctx=new AC(); } const c=this.ctx; if(c.state!=='running'){ try{ c.resume(); }catch(e){} } if(!this.unlocked){ try{ const b=c.createBuffer(1,1,22050); const s=c.createBufferSource(); s.buffer=b; s.connect(c.destination); s.start(0); this.unlocked=true; }catch(e){} } }catch(e){} },
   ok(){ return prefs.sound && this.ctx && this.ctx.state==='running'; },
   tone(freq,dur,type,vol,delay){ if(!this.ok()) return; const c=this.ctx, t=c.currentTime+(delay||0); const o=c.createOscillator(), g=c.createGain(); o.type=type||'triangle'; o.frequency.setValueAtTime(freq,t); g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(vol||0.2,t+0.02); g.gain.exponentialRampToValueAtTime(0.0001,t+dur); o.connect(g); g.connect(c.destination); o.start(t); o.stop(t+dur+0.05); },
   noise(dur,vol,delay,cutoff){ if(!this.ok()) return; const c=this.ctx, t=c.currentTime+(delay||0); const len=Math.max(1,Math.floor(c.sampleRate*dur)); const buf=c.createBuffer(1,len,c.sampleRate); const d=buf.getChannelData(0); for(let i=0;i<len;i++) d[i]=(Math.random()*2-1)*(1-i/len); const src=c.createBufferSource(); src.buffer=buf; const f=c.createBiquadFilter(); f.type='lowpass'; f.frequency.value=cutoff||800; const g=c.createGain(); g.gain.value=vol||0.3; src.connect(f); f.connect(g); g.connect(c.destination); src.start(t); },
@@ -1185,6 +1185,9 @@ const AudioSys = {
 };
 
 /* ---------- chiptune music: original, fully synthesized (pulse waves, triangle bass, noise drums) ---------- */
+/* audio unlock: iOS only lets sound start inside a completed user gesture; keep trying on every tap until the context runs (also recovers after phone calls / app switches) */
+for(const ev of ['touchend','click','pointerup','keydown']) document.addEventListener(ev, ()=>{ if(!AudioSys.ctx || AudioSys.ctx.state!=='running') AudioSys.init(); }, { capture:true, passive:true });
+document.addEventListener('visibilitychange', ()=>{ if(!document.hidden && AudioSys.ctx && AudioSys.ctx.state!=='running'){ try{ AudioSys.ctx.resume(); }catch(e){} } });
 function pulseWave(c, duty){ const n=32, real=new Float32Array(n), imag=new Float32Array(n); for(let k=1;k<n;k++) real[k]=(2/(k*Math.PI))*Math.sin(k*Math.PI*duty); return c.createPeriodicWave(real, imag); }
 let isNight=false;
 const Music = {
